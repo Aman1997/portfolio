@@ -1,4 +1,8 @@
 import { Flex, Image, Stack } from "@chakra-ui/react";
+import { useAnimation, motion } from "framer-motion";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
+import { useInViewAnimation } from "../hooks/useInViewAnimation";
 import Headings from "./common/Headings";
 
 const skills = [
@@ -89,17 +93,38 @@ const skills = [
 ];
 
 export default function Skills() {
+  const {
+    headingRef,
+    headingControl,
+    bodyRef,
+    bodyControl,
+  } = useInViewAnimation();
+
   return (
     <Flex bgColor="#212121" p="8" id="skills" direction="column">
-      <Headings heading="skills" />
+      <motion.div
+        ref={headingRef}
+        animate={headingControl}
+        initial="hidden"
+        style={{ width: "100%" }}
+      >
+        <Headings heading="skills" />
+      </motion.div>
       <Flex justify="center" py="10">
-        <Stack direction="row" wrap="wrap" maxWidth="800px" justify="center">
-          {skills.map((skill) => (
-            <Flex py="2" key={skill.id}>
-              <Image src={skill.imageSrc} alt={skill.name} height="25px" />
-            </Flex>
-          ))}
-        </Stack>
+        <motion.div
+          ref={bodyRef}
+          animate={bodyControl}
+          initial="hidden"
+          style={{ width: "100%", display: "flex", justifyContent: "center" }}
+        >
+          <Stack direction="row" wrap="wrap" maxWidth="800px" justify="center">
+            {skills.map((skill) => (
+              <Flex py="2" key={skill.id}>
+                <Image src={skill.imageSrc} alt={skill.name} height="25px" />
+              </Flex>
+            ))}
+          </Stack>
+        </motion.div>
       </Flex>
     </Flex>
   );

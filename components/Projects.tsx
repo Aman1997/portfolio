@@ -1,7 +1,18 @@
-import { chakra, Divider, Flex, Image, Stack, Text } from "@chakra-ui/react";
+import {
+  chakra,
+  Divider,
+  Flex,
+  Image,
+  Stack,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import Headings from "./common/Headings";
-import { AiOutlineLink } from "react-icons/ai";
+import { AiFillGithub, AiOutlineLink } from "react-icons/ai";
+import { useInViewAnimation } from "../hooks/useInViewAnimation";
+import { motion } from "framer-motion";
+import ImageViewer from "./modals/ImageViewer";
 
 const projects = [
   {
@@ -9,7 +20,7 @@ const projects = [
     name: "CloudFiles",
     description:
       "Developing the web application for CloudFiles Technologies that is being used by enterprise teams for sharing and tracking files. Developed features and intergrated with Hubspot for business workflows",
-    image: "/images/CloudFiles.webp",
+    images: ["/images/CloudFiles.webp"],
     techUsed: [
       "https://img.shields.io/badge/-TypeScript-007ACC?style=flat&logo=typescript&logoColor=white",
       "https://img.shields.io/badge/-NextJS-232F3E?style=flat&logo=Next.js&logoColor=white",
@@ -26,7 +37,7 @@ const projects = [
     name: "iCrimeFighter",
     description:
       "Developed secured and scalable features and the backend infrastructure for iCrimeFighter's SaaS application which is used by multiple federal/law enforcement agencies across US for evidence collection and sharing",
-    image: "/images/icf.png",
+    images: ["/images/icf.png"],
     techUsed: [
       "https://img.shields.io/badge/-TypeScript-007ACC?style=flat&logo=typescript&logoColor=white",
       "https://img.shields.io/badge/-Nodejs-43853d?style=flat&logo=Node.js&logoColor=white",
@@ -42,7 +53,7 @@ const projects = [
     name: "WhosThat",
     description:
       "Developed an annonymous chat application from scratch as part of an internal initiative at Antstack Technologies. ",
-    image: "/images/whosthat.jpeg",
+    images: ["/images/whosthat.jpeg"],
     techUsed: [
       "https://img.shields.io/badge/-TypeScript-007ACC?style=flat&logo=typescript&logoColor=white",
       "https://img.shields.io/badge/React_Native-20232A?style=flat&logo=react&logoColor=61DAFB",
@@ -56,7 +67,18 @@ const projects = [
     name: "Fitness App",
     description:
       "As part of a side project developed user and partner apps for a creating a platform where fitness partners could list their service and manager bookings and finances and users could browse and book services. The platform was similar to Gympass but for a B2C model",
-    image: "/images/fitness_app/user-1.jpeg",
+    images: [
+      "/images/fitness_app/user-1.jpeg",
+      "/images/fitness_app/user-2.jpeg",
+      "/images/fitness_app/user-3.jpeg",
+      "/images/fitness_app/user-4.jpeg",
+      "/images/fitness_app/user-5.jpeg",
+      "/images/fitness_app/partner-1.jpeg",
+      "/images/fitness_app/partner-2.jpeg",
+      "/images/fitness_app/partner-3.jpeg",
+      "/images/fitness_app/partner-4.jpeg",
+      "/images/fitness_app/partner-5.jpeg",
+    ],
     techUsed: [
       "https://img.shields.io/badge/-TypeScript-007ACC?style=flat&logo=typescript&logoColor=white",
       "https://img.shields.io/badge/React_Native-20232A?style=flat&logo=react&logoColor=61DAFB",
@@ -66,18 +88,29 @@ const projects = [
       "https://img.shields.io/badge/-MongoDB-13aa52?style=flat&logo=mongodb&logoColor=white",
       "https://img.shields.io/badge/-Amazon-232F3E?style=flat&logo=AmazonAWS&logoColor=white",
     ],
+    sourceCode: "https://github.com/Aman1997/fitness-user-app",
   },
 ];
 
 interface IProjectCard {
   name: string;
   description: string;
-  image: string;
+  images: Array<string>;
   tech: Array<string>;
   url?: string;
+  sourceCode?: string;
 }
 
-const ProjectCard = ({ name, description, image, tech, url }: IProjectCard) => {
+const ProjectCard = ({
+  name,
+  description,
+  images,
+  tech,
+  url,
+  sourceCode,
+}: IProjectCard) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Stack
       maxW="300px"
@@ -85,15 +118,23 @@ const ProjectCard = ({ name, description, image, tech, url }: IProjectCard) => {
       bgColor="#2b2b2b"
       borderRadius="md"
       color="white"
+      _hover={{
+        transform: "scale(1.01)",
+        boxShadow: "0 1.6rem 3.6rem rgba(0, 0, 0,0.6)",
+      }}
+      onClick={() => {
+        images.length > 1 && onOpen();
+      }}
     >
       <Image
-        src={image}
+        src={images[0]}
         alt={name}
         borderTopLeftRadius="md"
         borderTopRightRadius="md"
         maxH="200px"
         objectFit="scale-down"
         bgColor="#212121"
+        _hover={images.length > 1 ? { cursor: "pointer" } : {}}
       />
       <Stack p="3">
         <Stack direction="row" align="center">
@@ -124,28 +165,61 @@ const ProjectCard = ({ name, description, image, tech, url }: IProjectCard) => {
             </Flex>
           ))}
         </Stack>
+        {sourceCode && (
+          <Link href={sourceCode} passHref>
+            <chakra.a target="_blank">
+              <Stack direction="row" pt="2">
+                <AiFillGithub size="16px" color="white" />
+                <Text color="#00ffff" fontSize="12px">
+                  Source code
+                </Text>
+              </Stack>
+            </chakra.a>
+          </Link>
+        )}
       </Stack>
+      {images.length > 1 && (
+        <ImageViewer isOpen={isOpen} onClose={onClose} images={images} />
+      )}
     </Stack>
   );
 };
 
 export default function Projects() {
+  const { headingRef, headingControl, bodyRef, bodyControl } =
+    useInViewAnimation();
+
   return (
     <Flex bgColor="#262626" py="8" id="projects" direction="column">
-      <Headings heading="projects" />
+      <motion.div
+        ref={headingRef}
+        animate={headingControl}
+        initial="hidden"
+        style={{ width: "100%" }}
+      >
+        <Headings heading="projects" />
+      </motion.div>
       <Flex direction="column" py="10" align="center">
-        <Stack direction="row" spacing="4">
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              name={project.name}
-              description={project.description}
-              tech={project.techUsed}
-              image={project.image}
-              url={project.url}
-            />
-          ))}
-        </Stack>
+        <motion.div
+          ref={bodyRef}
+          animate={bodyControl}
+          initial="hidden"
+          style={{ width: "100%", display: "flex", justifyContent: "center" }}
+        >
+          <Stack direction="row" spacing="4">
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                name={project.name}
+                description={project.description}
+                tech={project.techUsed}
+                images={project.images}
+                url={project.url}
+                sourceCode={project.sourceCode}
+              />
+            ))}
+          </Stack>
+        </motion.div>
       </Flex>
     </Flex>
   );

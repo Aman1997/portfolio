@@ -1,6 +1,10 @@
 import { Flex, Stack, Text } from "@chakra-ui/react";
 import Headings from "./common/Headings";
 import { MdLocationOn, MdOutlineEmail, MdPhone } from "react-icons/md";
+import { useInViewAnimation } from "../hooks/useInViewAnimation";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
 
 interface IContactCard {
   icon: any;
@@ -32,27 +36,78 @@ const ContactCard = ({ icon, name, description }: IContactCard) => {
 };
 
 export default function Contact() {
+  const { headingRef, headingControl, bodyRef, bodyControl } =
+    useInViewAnimation();
+
+  const { inView, ref } = useInView();
+
+  const leftContactControl = useAnimation();
+  const middleContactControl = useAnimation();
+  const rightContactControl = useAnimation();
+
+  useEffect(() => {
+    if (
+      inView &&
+      leftContactControl &&
+      middleContactControl &&
+      rightContactControl
+    ) {
+      leftContactControl.start(() => ({
+        x: [-60, 0],
+        transition: { ease: "easeIn" },
+      }));
+      middleContactControl.start(() => ({
+        y: [60, 0],
+        transition: { ease: "easeIn" },
+      }));
+      rightContactControl.start(() => ({
+        x: [60, 0],
+        transition: { ease: "easeIn" },
+      }));
+    }
+  }, [leftContactControl, middleContactControl, rightContactControl, inView]);
+
   return (
     <Flex bgColor="#262626" py="8" id="contact" direction="column">
-      <Headings heading="contact me" />
+      <motion.div
+        ref={headingRef}
+        animate={headingControl}
+        initial="hidden"
+        style={{ width: "100%" }}
+      >
+        <Headings heading="contact me" />
+      </motion.div>
       <Stack py="10" align="center" spacing="8">
-        <Text color="white">Get in touch with me</Text>
-        <Flex w="full" justify="space-evenly">
-          <ContactCard
-            name="address"
-            description="Bangalore, Karnataka, India"
-            icon={<MdLocationOn size="20px" />}
-          />
-          <ContactCard
-            name="email address"
-            description="amanb218@gmail.com"
-            icon={<MdOutlineEmail size="20px" />}
-          />
-          <ContactCard
-            name="phone number"
-            description="+91 9911138685"
-            icon={<MdPhone size="20px" />}
-          />
+        <motion.div
+          ref={bodyRef}
+          animate={bodyControl}
+          initial="hidden"
+          style={{ width: "100%", display: "flex", justifyContent: "center" }}
+        >
+          <Text color="white">Get in touch with me</Text>
+        </motion.div>
+        <Flex w="full" justify="space-evenly" ref={ref}>
+          <motion.div animate={leftContactControl} initial="hidden">
+            <ContactCard
+              name="address"
+              description="Bangalore, Karnataka, India"
+              icon={<MdLocationOn size="20px" />}
+            />
+          </motion.div>
+          <motion.div animate={middleContactControl} initial="hidden">
+            <ContactCard
+              name="email address"
+              description="amanb218@gmail.com"
+              icon={<MdOutlineEmail size="20px" />}
+            />
+          </motion.div>
+          <motion.div animate={rightContactControl} initial="hidden">
+            <ContactCard
+              name="phone number"
+              description="+91 9911138685"
+              icon={<MdPhone size="20px" />}
+            />
+          </motion.div>
         </Flex>
       </Stack>
     </Flex>

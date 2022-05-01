@@ -2,6 +2,8 @@ import { chakra, Flex, Image, Stack, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import Headings from "./common/Headings";
 import { BiCalendar } from "react-icons/bi";
+import { useInViewAnimation } from "../hooks/useInViewAnimation";
+import { motion } from "framer-motion";
 
 const blogs = [
   {
@@ -36,10 +38,15 @@ const BlogCard = ({ name, image, date, href }: IBlogCard) => {
       borderRadius="md"
       color="white"
     >
-      <Image src={image} alt={name} borderTopLeftRadius="md" borderTopRightRadius="md" />
+      <Image
+        src={image}
+        alt={name}
+        borderTopLeftRadius="md"
+        borderTopRightRadius="md"
+      />
       <Stack p="3">
         <Text>{name}</Text>
-        <Flex justify="space-between" align="center" pt='3'>
+        <Flex justify="space-between" align="center" pt="3">
           <Stack direction="row" spacing="2">
             <BiCalendar color="#999999" />
             <Text color="#999999" fontSize="12px">
@@ -58,21 +65,37 @@ const BlogCard = ({ name, image, date, href }: IBlogCard) => {
 };
 
 export default function Blogs() {
+  const { headingRef, headingControl, bodyRef, bodyControl } =
+    useInViewAnimation();
   return (
     <Flex bgColor="#212121" py="8" id="blogs" direction="column">
-      <Headings heading="blogs" />
+      <motion.div
+        ref={headingRef}
+        animate={headingControl}
+        initial="hidden"
+        style={{ width: "100%" }}
+      >
+        <Headings heading="blogs" />
+      </motion.div>
       <Flex py="10" justify="center">
-        <Stack direction="row" spacing="4">
-          {blogs.map((blog) => (
-            <BlogCard
-              key={blog.id}
-              name={blog.name}
-              image={blog.image}
-              date={blog.date}
-              href={blog.href}
-            />
-          ))}
-        </Stack>
+        <motion.div
+          ref={bodyRef}
+          animate={bodyControl}
+          initial="hidden"
+          style={{ width: "100%", display: "flex", justifyContent: "center" }}
+        >
+          <Stack direction="row" spacing="4">
+            {blogs.map((blog) => (
+              <BlogCard
+                key={blog.id}
+                name={blog.name}
+                image={blog.image}
+                date={blog.date}
+                href={blog.href}
+              />
+            ))}
+          </Stack>
+        </motion.div>
       </Flex>
     </Flex>
   );

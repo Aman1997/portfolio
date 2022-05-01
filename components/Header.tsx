@@ -7,9 +7,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { Dispatch, useState } from "react";
+import { Dispatch, useEffect, useState } from "react";
 
 interface INavigationLink {
   id: string;
@@ -20,19 +18,46 @@ interface INavigationLink {
 
 const NavigationLink = ({ id, name, isActive, setActive }: INavigationLink) => {
   return (
-    <Link href={`#${id}`} passHref scroll={false}>
-      <chakra.a onClick={() => setActive(id)}>
-        <Text fontWeight="bold" color={isActive ? "#00ffff" : "white"}>
-          {name}
-        </Text>
-      </chakra.a>
-    </Link>
+    <chakra.a
+      onClick={() => {
+        setActive(id);
+        const scrollDiv = document.getElementById(id)?.offsetTop as number;
+        window.scrollTo({ top: scrollDiv - 70, behavior: "smooth" });
+      }}
+      _hover={{ cursor: "pointer", transform: "scale(1.1)" }}
+    >
+      <Text fontWeight="bold" color={isActive ? "#00ffff" : "white"}>
+        {name}
+      </Text>
+    </chakra.a>
   );
 };
 
 export default function Header() {
-  const router = useRouter();
   const [active, setActive] = useState("home");
+
+  useEffect(() => {
+    const sections = document.querySelectorAll("div");
+    window.onscroll = () => {
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 80) {
+          const sectionId = section.getAttribute("id") as string;
+          if (
+            [
+              "home",
+              "about",
+              "skills",
+              "projects",
+              "blogs",
+              "contact",
+            ].includes(sectionId)
+          )
+            setActive(section.getAttribute("id") as string);
+        }
+      });
+    };
+  }, []);
 
   return (
     <Flex
@@ -46,7 +71,12 @@ export default function Header() {
       blur="2xl"
     >
       <Box>
-        <Image src="/images/logo.png" alt="logo"/>
+        <Image
+          src="/images/logo.png"
+          alt="logo"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          _hover={{ cursor: "pointer" }}
+        />
       </Box>
       <Stack color="white" direction="row" spacing="14" align="center">
         <NavigationLink
@@ -87,10 +117,14 @@ export default function Header() {
           fontWeight="normal"
           fontSize="14px"
           borderRadius="20px"
-          _hover={{ bgColor: "#00FFBB" }}
+          _hover={{ bgColor: "#00FFBB", transform: "scale(1.1)" }}
           _focus={{ outline: "none", bgColor: "#00FFBB" }}
           boxShadow="0 1.6rem 2.6rem rgba(0, 255, 187, 0.2)"
-          onClick={() => router.push("/#contact")}
+          onClick={() => {
+            const scrollDiv = document.getElementById("contact")
+              ?.offsetTop as number;
+            window.scrollTo({ top: scrollDiv - 70, behavior: "smooth" });
+          }}
         >
           Contact Me
         </Button>
