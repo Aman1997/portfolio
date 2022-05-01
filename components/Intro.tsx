@@ -4,7 +4,7 @@ export default function Intro() {
   return (
     <Flex h="full" id='home'>
       <Flex flex="1" align="flex-end" justify='center'>
-        <Image src="/images/intro.png" maxHeight="500px" />
+        <Image src="/images/intro.png" alt='intro' maxHeight="500px" />
       </Flex>
       <Flex flex="1" align="center" justify="flex-start">
         <Stack color="white" spacing="5">
@@ -16,7 +16,7 @@ export default function Intro() {
             FULL STACK DEVELOPER 👨🏻‍💻
           </Heading>
           <Text maxWidth="480px">
-            I’m a software engineer having expertise in building user-focussed
+            I'm a software engineer having expertise in building user-focussed
             and scalable products using JavaScript and AWS.
           </Text>
         </Stack>

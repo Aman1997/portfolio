@@ -46,7 +46,7 @@ export default function Header() {
       blur="2xl"
     >
       <Box>
-        <Image src="/images/logo.png" />
+        <Image src="/images/logo.png" alt="logo"/>
       </Box>
       <Stack color="white" direction="row" spacing="14" align="center">
         <NavigationLink

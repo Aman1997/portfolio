@@ -88,6 +88,7 @@ const ProjectCard = ({ name, description, image, tech, url }: IProjectCard) => {
     >
       <Image
         src={image}
+        alt={name}
         borderTopLeftRadius="md"
         borderTopRightRadius="md"
         maxH="200px"
@@ -100,7 +101,7 @@ const ProjectCard = ({ name, description, image, tech, url }: IProjectCard) => {
           {url && (
             <Link href={url} passHref>
               <chakra.a color="#00ffff" target="_blank" fontSize="12px">
-                <AiOutlineLink size="16px"/>
+                <AiOutlineLink size="16px" />
               </chakra.a>
             </Link>
           )}
@@ -119,7 +120,7 @@ const ProjectCard = ({ name, description, image, tech, url }: IProjectCard) => {
         >
           {tech.map((tech, index) => (
             <Flex py="2" key={index}>
-              <Image src={tech} />
+              <Image src={tech} alt="technologies" />
             </Flex>
           ))}
         </Stack>

@@ -15,6 +15,7 @@ const Home: NextPage = () => {
     <Stack bgColor="#212121" spacing="2">
       <Head>
         <title>Aman Bisht | Full Stack Developer & Product Engineer</title>
+        <link rel="shortcut icon" href="/favicon.png" />
       </Head>
       <Flex direction="column" h="100vh">
         <Header />

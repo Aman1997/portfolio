@@ -36,7 +36,7 @@ const BlogCard = ({ name, image, date, href }: IBlogCard) => {
       borderRadius="md"
       color="white"
     >
-      <Image src={image} borderTopLeftRadius="md" borderTopRightRadius="md" />
+      <Image src={image} alt={name} borderTopLeftRadius="md" borderTopRightRadius="md" />
       <Stack p="3">
         <Text>{name}</Text>
         <Flex justify="space-between" align="center" pt='3'>

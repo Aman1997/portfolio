@@ -21,7 +21,7 @@ export default function About() {
           </Stack>
         </Flex>
         <Flex flex="1" px="10" align="center" justify="center" mt="5">
-          <Image src="/images/about.jpeg" maxWidth="440px" objectFit="cover" />
+          <Image src="/images/about.jpeg" alt='about' maxWidth="440px" objectFit="cover" />
         </Flex>
       </Flex>
     </Flex>
