@@ -69,6 +69,7 @@ export default function Header() {
       align="center"
       bgColor="rgba(33,33,33, 0.8)"
       blur="2xl"
+      zIndex={5}
     >
       <Box>
         <Image
