@@ -1,4 +1,4 @@
-import { Flex, Image, Stack, Text } from "@chakra-ui/react";
+import { Flex, Image, Stack, Text, useMediaQuery } from "@chakra-ui/react";
 import Headings from "./common/Headings";
 import { motion } from "framer-motion";
 import { useInViewAnimation } from "../hooks/useInViewAnimation";
@@ -6,6 +6,8 @@ import { useInViewAnimation } from "../hooks/useInViewAnimation";
 export default function About() {
   const { headingRef, headingControl, bodyRef, bodyControl } =
     useInViewAnimation();
+
+  const [isMobile] = useMediaQuery("(max-width: 768px)");
 
   return (
     <Flex bgColor="#262626" py="8" id="about" direction="column">
@@ -23,7 +25,18 @@ export default function About() {
         initial="hidden"
         style={{ width: "100%" }}
       >
-        <Flex py="5">
+        <Flex py="5" direction={isMobile ? "column" : "row"}>
+          {isMobile && (
+            <Flex flex="1" px="10" align="center" justify="center" mt="5">
+              <Image
+                src="/images/about.jpeg"
+                alt="about"
+                maxWidth="440px"
+                objectFit="cover"
+                boxShadow="0 1.6rem 3.6rem rgba(0, 0, 0, 0.8)"
+              />
+            </Flex>
+          )}
           <Flex flex="1" px="10" justify="center" mt="10">
             <Stack maxW="500px">
               <Text color="white">
@@ -38,15 +51,17 @@ export default function About() {
               </Text>
             </Stack>
           </Flex>
-          <Flex flex="1" px="10" align="center" justify="center" mt="5">
-            <Image
-              src="/images/about.jpeg"
-              alt="about"
-              maxWidth="440px"
-              objectFit="cover"
-              boxShadow="0 1.6rem 3.6rem rgba(0, 0, 0, 0.8)"
-            />
-          </Flex>
+          {!isMobile && (
+            <Flex flex="1" px="10" align="center" justify="center" mt="5">
+              <Image
+                src="/images/about.jpeg"
+                alt="about"
+                maxWidth="440px"
+                objectFit="cover"
+                boxShadow="0 1.6rem 3.6rem rgba(0, 0, 0, 0.8)"
+              />
+            </Flex>
+          )}
         </Flex>
       </motion.div>
     </Flex>

@@ -1,4 +1,4 @@
-import { chakra, Flex, Stack, Text } from "@chakra-ui/react";
+import { chakra, Flex, Stack, Text, useMediaQuery } from "@chakra-ui/react";
 import Link from "next/link";
 import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
 
@@ -22,6 +22,8 @@ const SocialIcon = ({ icon, href }: { icon: any; href: string }) => {
 };
 
 export default function Footer() {
+  const [isMobile] = useMediaQuery("(max-width: 768px)");
+  
   return (
     <Stack
       bgColor="#212121"
@@ -31,7 +33,14 @@ export default function Footer() {
       spacing="4"
       fontSize="14px"
     >
-      <Flex align="center" justify="space-between" w="full" px="16">
+      <Stack
+        align="center"
+        justify="space-between"
+        direction="row"
+        w="full"
+        px="16"
+        {...(isMobile && { direction: "column", justifyContent: "center" })}
+      >
         <Text>
           &copy; Copyright {new Date().getFullYear()} &nbsp; | &nbsp; All Rights
           Reserved
@@ -46,7 +55,7 @@ export default function Footer() {
             href="https://www.linkedin.com/in/aman-bisht-00a96411b/"
           />
         </Stack>
-      </Flex>
+      </Stack>
       <Text>Made with ❤️ by Aman Bisht</Text>
     </Stack>
   );

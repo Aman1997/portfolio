@@ -6,6 +6,7 @@ import {
   Stack,
   Text,
   useDisclosure,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import Headings from "./common/Headings";
@@ -111,9 +112,11 @@ const ProjectCard = ({
 }: IProjectCard) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [isMobile] = useMediaQuery("(max-width: 768px)");
+
   return (
     <Stack
-      maxW="300px"
+      maxW={isMobile ? "300px" : "500px"}
       boxShadow="0 1.6rem 3.6rem rgba(0, 0, 0,0.2)"
       bgColor="#2b2b2b"
       borderRadius="md"
@@ -125,6 +128,7 @@ const ProjectCard = ({
       onClick={() => {
         images.length > 1 && onOpen();
       }}
+      overflowX="scroll"
     >
       <Image
         src={images[0]}
@@ -189,6 +193,8 @@ export default function Projects() {
   const { headingRef, headingControl, bodyRef, bodyControl } =
     useInViewAnimation();
 
+  const [isVertical] = useMediaQuery("(max-width: 1330px)");
+
   return (
     <Flex bgColor="#262626" py="8" id="projects" direction="column">
       <motion.div
@@ -206,7 +212,11 @@ export default function Projects() {
           initial="hidden"
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
-          <Stack direction="row" spacing="4">
+          <Stack
+            direction="row"
+            spacing="4"
+            {...(isVertical && { direction: "column", spacing: "6" })}
+          >
             {projects.map((project) => (
               <ProjectCard
                 key={project.id}

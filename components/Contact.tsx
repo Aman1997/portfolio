@@ -1,4 +1,4 @@
-import { Flex, Stack, Text } from "@chakra-ui/react";
+import { Flex, Stack, Text, useMediaQuery } from "@chakra-ui/react";
 import Headings from "./common/Headings";
 import { MdLocationOn, MdOutlineEmail, MdPhone } from "react-icons/md";
 import { useInViewAnimation } from "../hooks/useInViewAnimation";
@@ -39,6 +39,8 @@ export default function Contact() {
   const { headingRef, headingControl, bodyRef, bodyControl } =
     useInViewAnimation();
 
+  const [isMobile] = useMediaQuery("(max-width: 768px)");
+
   const { inView, ref } = useInView();
 
   const leftContactControl = useAnimation();
@@ -53,7 +55,7 @@ export default function Contact() {
       rightContactControl
     ) {
       leftContactControl.start(() => ({
-        x: [-60, 0],
+        ...(isMobile ? { y: [60, 0] } : { x: [-60, 0] }),
         transition: { ease: "easeIn" },
       }));
       middleContactControl.start(() => ({
@@ -61,7 +63,7 @@ export default function Contact() {
         transition: { ease: "easeIn" },
       }));
       rightContactControl.start(() => ({
-        x: [60, 0],
+        ...(isMobile ? { y: [60, 0] } : { x: [-60, 0] }),
         transition: { ease: "easeIn" },
       }));
     }
@@ -86,28 +88,45 @@ export default function Contact() {
         >
           <Text color="white">Get in touch with me</Text>
         </motion.div>
-        <Flex w="full" justify="space-evenly" ref={ref}>
-          <motion.div animate={leftContactControl} initial="hidden">
-            <ContactCard
-              name="address"
-              description="Bangalore, Karnataka, India"
-              icon={<MdLocationOn size="20px" />}
-            />
-          </motion.div>
-          <motion.div animate={middleContactControl} initial="hidden">
-            <ContactCard
-              name="email address"
-              description="amanb218@gmail.com"
-              icon={<MdOutlineEmail size="20px" />}
-            />
-          </motion.div>
-          <motion.div animate={rightContactControl} initial="hidden">
-            <ContactCard
-              name="phone number"
-              description="+91 9911138685"
-              icon={<MdPhone size="20px" />}
-            />
-          </motion.div>
+        <Flex
+          w="full"
+          justifyContent="space-evenly"
+          {...(isMobile && { justifyContent: "center" })}
+        >
+          <Stack
+            w="full"
+            justify="space-evenly"
+            ref={ref}
+            direction="row"
+            {...(isMobile && {
+              direction: "column",
+              my: 5,
+              px: 10,
+              spacing: 5,
+            })}
+          >
+            <motion.div animate={leftContactControl} initial="hidden">
+              <ContactCard
+                name="address"
+                description="Bangalore, Karnataka, India"
+                icon={<MdLocationOn size="20px" />}
+              />
+            </motion.div>
+            <motion.div animate={middleContactControl} initial="hidden">
+              <ContactCard
+                name="email address"
+                description="amanb218@gmail.com"
+                icon={<MdOutlineEmail size="20px" />}
+              />
+            </motion.div>
+            <motion.div animate={rightContactControl} initial="hidden">
+              <ContactCard
+                name="phone number"
+                description="+91 9911138685"
+                icon={<MdPhone size="20px" />}
+              />
+            </motion.div>
+          </Stack>
         </Flex>
       </Stack>
     </Flex>

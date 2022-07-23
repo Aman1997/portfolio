@@ -1,4 +1,11 @@
-import { chakra, Flex, Image, Stack, Text } from "@chakra-ui/react";
+import {
+  chakra,
+  Flex,
+  Image,
+  Stack,
+  Text,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import Headings from "./common/Headings";
 import { BiCalendar } from "react-icons/bi";
@@ -67,6 +74,9 @@ const BlogCard = ({ name, image, date, href }: IBlogCard) => {
 export default function Blogs() {
   const { headingRef, headingControl, bodyRef, bodyControl } =
     useInViewAnimation();
+
+  const [isMobile] = useMediaQuery("(max-width: 768px)");
+
   return (
     <Flex bgColor="#212121" py="8" id="blogs" direction="column">
       <motion.div
@@ -84,7 +94,11 @@ export default function Blogs() {
           initial="hidden"
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
-          <Stack direction="row" spacing="4">
+          <Stack
+            direction="row"
+            spacing="4"
+            {...(isMobile && { direction: "column", spacing:"6" })}
+          >
             {blogs.map((blog) => (
               <BlogCard
                 key={blog.id}
