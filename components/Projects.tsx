@@ -116,7 +116,7 @@ const ProjectCard = ({
 
   return (
     <Stack
-      maxW={isMobile ? "300px" : "500px"}
+      w={'300px'}
       boxShadow="0 1.6rem 3.6rem rgba(0, 0, 0,0.2)"
       bgColor="#2b2b2b"
       borderRadius="md"
@@ -128,7 +128,6 @@ const ProjectCard = ({
       onClick={() => {
         images.length > 1 && onOpen();
       }}
-      overflowX="scroll"
     >
       <Image
         src={images[0]}
