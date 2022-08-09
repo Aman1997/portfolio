@@ -34,7 +34,7 @@ export default function Intro() {
               FULL STACK DEVELOPER 👨🏻‍💻
             </Heading>
             <Text maxWidth="480px">
-              I'm a software engineer having expertise in building user-focussed
+              I'm a software engineer having expertise in building user-focused
               and scalable products using JavaScript and AWS.
             </Text>
           </Stack>
