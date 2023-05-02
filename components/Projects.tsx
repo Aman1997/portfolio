@@ -20,7 +20,7 @@ const projects = [
     id: 1,
     name: "CloudFiles",
     description:
-      "Developing the web application for CloudFiles Technologies that is being used by enterprise teams for sharing and tracking files. Developed features and intergrated with Hubspot for business workflows",
+      "Developed the web application for CloudFiles Technologies that is being used by enterprise teams for sharing and tracking files. Developed features and intergrated with Hubspot for business workflows",
     images: ["/images/CloudFiles.webp"],
     techUsed: [
       "https://img.shields.io/badge/-TypeScript-007ACC?style=flat&logo=typescript&logoColor=white",
@@ -33,22 +33,22 @@ const projects = [
     ],
     url: "https://cloudfiles.io/",
   },
-  {
-    id: 2,
-    name: "iCrimeFighter",
-    description:
-      "Developed secured and scalable features and the backend infrastructure for iCrimeFighter's SaaS application which is used by multiple federal/law enforcement agencies across US for evidence collection and sharing",
-    images: ["/images/icf.png"],
-    techUsed: [
-      "https://img.shields.io/badge/-TypeScript-007ACC?style=flat&logo=typescript&logoColor=white",
-      "https://img.shields.io/badge/-Nodejs-43853d?style=flat&logo=Node.js&logoColor=white",
-      "https://img.shields.io/badge/MySQL-00000F?style=flat&logo=mysql&logoColor=white",
-      "https://img.shields.io/badge/-Amazon-232F3E?style=flat&logo=AmazonAWS&logoColor=white",
-      "https://img.shields.io/badge/-Serverless-FD5750?style=flat&logo=Serverless&logoColor=white",
-      "https://img.shields.io/badge/-Docker-46a2f1?style=flat&logo=docker&logoColor=white",
-    ],
-    url: "https://www.icrimefighter.com/",
-  },
+  // {
+  //   id: 2,
+  //   name: "iCrimeFighter",
+  //   description:
+  //     "Developed secured and scalable features and the backend infrastructure for iCrimeFighter's SaaS application which is used by multiple federal/law enforcement agencies across US for evidence collection and sharing",
+  //   images: ["/images/icf.png"],
+  //   techUsed: [
+  //     "https://img.shields.io/badge/-TypeScript-007ACC?style=flat&logo=typescript&logoColor=white",
+  //     "https://img.shields.io/badge/-Nodejs-43853d?style=flat&logo=Node.js&logoColor=white",
+  //     "https://img.shields.io/badge/MySQL-00000F?style=flat&logo=mysql&logoColor=white",
+  //     "https://img.shields.io/badge/-Amazon-232F3E?style=flat&logo=AmazonAWS&logoColor=white",
+  //     "https://img.shields.io/badge/-Serverless-FD5750?style=flat&logo=Serverless&logoColor=white",
+  //     "https://img.shields.io/badge/-Docker-46a2f1?style=flat&logo=docker&logoColor=white",
+  //   ],
+  //   url: "https://www.icrimefighter.com/",
+  // },
   {
     id: 3,
     name: "WhosThat",
