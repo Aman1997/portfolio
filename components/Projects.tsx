@@ -61,7 +61,7 @@ const projects = [
       "https://img.shields.io/badge/-Nodejs-43853d?style=flat&logo=Node.js&logoColor=white",
       "https://img.shields.io/badge/-Amazon-232F3E?style=flat&logo=AmazonAWS&logoColor=white",
     ],
-    url: "https://whosthat.in/",
+    url: "https://hoo.chat/",
   },
   {
     id: 4,
